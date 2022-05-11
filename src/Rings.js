@@ -6,9 +6,12 @@ export function Rings() {
     const itemsRef = useRef([]);
 
     useFrame((state) => {
+        let elapsed = state.clock.getElapsedTime();
+
         for(let i=0; i < itemsRef.current.length; i++) {
             let mesh = itemsRef.current[i];
-            let z = (i-7) * 3.5;
+            // let z = (i-7) * 3.5; // old
+            let z = ( i - 7 ) * 3.5 + ((elapsed * 0.4) % 3.5) * 2;
             mesh.position.set(0,0,-z);
 
             let dist = Math.abs(z);
@@ -20,7 +23,7 @@ export function Rings() {
             }
             colorScale *= 0.5;
 
-            if( i % 2 == 1) {
+            if( i % 2 === 1) {
                 mesh.material.emissive = new Color(6, 0.15, 0.7).multiplyScalar(colorScale);
             } else {
                 mesh.material.emissive = new Color(0.1, 0.7, 3).multiplyScalar(colorScale);
